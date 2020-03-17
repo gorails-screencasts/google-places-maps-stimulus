@@ -18,3 +18,15 @@ $(document).on("turbolinks:load", () => {
   $('[data-toggle="tooltip"]').tooltip()
   $('[data-toggle="popover"]').popover()
 })
+
+require("trix")
+require("@rails/actiontext")
+
+import "controllers"
+
+window.initMap = function(...args) {
+  const event = document.createEvent("Events")
+  event.initEvent("google-maps-callback", true, true)
+  event.args = args
+  window.dispatchEvent(event)
+}

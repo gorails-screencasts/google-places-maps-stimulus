@@ -1,0 +1,62 @@
+<%= form_with(model: [trip, stop], local: true, data: { controller: "places", action: "google-maps-callback@window->places#initMap", places_latitude: stop.latitude, places_longitude: stop.longitude }) do |form| %>
+  <% if stop.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(stop.errors.count, "error") %> prohibited this stop from being saved:</h2>
+
+      <ul>
+      <% stop.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="d-flex">
+    <div>
+      <div class="form-group">
+        <%= form.label :address %>
+        <%= form.search_field :address, class: 'form-control', data: { target: "places.field", action: "keydown->places#keydown" }%>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :latitude %>
+        <%= form.text_field :latitude, class: 'form-control', data: { target: "places.latitude" } %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :longitude %>
+        <%= form.text_field :longitude, class: 'form-control', data: { target: "places.longitude" } %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :arrival_date %>
+        <%= form.date_select :arrival_date, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :notes %>
+        <%= form.rich_text_area :notes, class: 'form-control' %>
+      </div>
+    </div>
+
+    <div class="p-4">
+      <div data-target="places.map" style="height:400px;width:400px"></div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <% if stop.persisted? %>
+      <div class="float-right">
+        <%= link_to 'Destroy', trip_stop_path(trip, stop), method: :delete, class: "text-danger", data: { confirm: 'Are you sure?' } %>
+      </div>
+    <% end %>
+
+    <%= form.submit class: 'btn btn-primary' %>
+
+    <% if stop.persisted? %>
+      <%= link_to "Cancel", trip_stop_path(@trip, stop), class: "btn btn-link" %>
+    <% else %>
+      <%= link_to "Cancel", trip_path(@trip), class: "btn btn-link" %>
+    <% end %>
+  </div>
+<% end %>

@@ -1,0 +1,34 @@
+<%= form_with(model: trip, local: true) do |form| %>
+  <% if trip.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(trip.errors.count, "error") %> prohibited this trip from being saved:</h2>
+
+      <ul>
+      <% trip.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :name %>
+    <%= form.text_field :name, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <% if trip.persisted? %>
+      <div class="float-right">
+        <%= link_to 'Destroy', trip, method: :delete, class: "text-danger", data: { confirm: 'Are you sure?' } %>
+      </div>
+    <% end %>
+
+    <%= form.submit class: 'btn btn-primary' %>
+
+    <% if trip.persisted? %>
+      <%= link_to "Cancel", trip, class: "btn btn-link" %>
+    <% else %>
+      <%= link_to "Cancel", trips_path, class: "btn btn-link" %>
+    <% end %>
+  </div>
+<% end %>

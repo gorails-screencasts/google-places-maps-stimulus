@@ -1,0 +1,17 @@
+<div class="page-header">
+  <%= link_to trips_path, class: 'btn btn-default' do %>
+    All Trips
+  <% end %>
+  <%= link_to edit_trip_path(@trip), class: 'btn btn-outline-primary' do %>
+    Edit
+  <% end %>
+  <h1><%= @trip.name %></h1>
+</div>
+
+<ol>
+  <% @trip.stops.each do |stop| %>
+    <li><%= link_to stop.address, trip_stop_path(@trip, stop) %>
+  <% end  %>
+</ol>
+
+<%= link_to "Add a stop", new_trip_stop_path(@trip), class: "btn btn-primary" %>
